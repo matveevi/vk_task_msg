@@ -166,6 +166,30 @@ src/client.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/src/client.cpp.s
 .PHONY : src/client.cpp.s
 
+src/data_base/db_tools.o: src/data_base/db_tools.cpp.o
+.PHONY : src/data_base/db_tools.o
+
+# target to build an object file
+src/data_base/db_tools.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/data_base/db_tools.cpp.o
+.PHONY : src/data_base/db_tools.cpp.o
+
+src/data_base/db_tools.i: src/data_base/db_tools.cpp.i
+.PHONY : src/data_base/db_tools.i
+
+# target to preprocess a source file
+src/data_base/db_tools.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/data_base/db_tools.cpp.i
+.PHONY : src/data_base/db_tools.cpp.i
+
+src/data_base/db_tools.s: src/data_base/db_tools.cpp.s
+.PHONY : src/data_base/db_tools.s
+
+# target to generate assembly for a file
+src/data_base/db_tools.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/data_base/db_tools.cpp.s
+.PHONY : src/data_base/db_tools.cpp.s
+
 src/server.o: src/server.cpp.o
 .PHONY : src/server.o
 
@@ -203,6 +227,9 @@ help:
 	@echo "... src/client.o"
 	@echo "... src/client.i"
 	@echo "... src/client.s"
+	@echo "... src/data_base/db_tools.o"
+	@echo "... src/data_base/db_tools.i"
+	@echo "... src/data_base/db_tools.s"
 	@echo "... src/server.o"
 	@echo "... src/server.i"
 	@echo "... src/server.s"

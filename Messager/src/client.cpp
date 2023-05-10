@@ -4,6 +4,12 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+// Закрытие сокета
+void close_connection(int socket) {
+    shutdown(socket, SHUT_RDWR);
+    close(socket);
+}
+
 const int PORT = 8888;
 
 int main(int argc, char const *argv[]) {
@@ -11,8 +17,10 @@ int main(int argc, char const *argv[]) {
     struct sockaddr_in serv_addr;
     char buffer[1024] = {0};
     const char *hello = "Hello from client";
-    const char *login = "admin\n";
-    const char *password = "password\n";
+    // const char *login = "admin\n";
+    // const char *password = "password\n";
+    // const char *q_reg = "reg\n";
+    // const char *q_login = "login\n";
 
     // Создаем дескриптор сокета
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -41,35 +49,51 @@ int main(int argc, char const *argv[]) {
     printf("%s\n", buffer);
     memset(buffer, 0, sizeof(buffer));
 
+    // Запрос на регистрацию
+    valread = read(sock, buffer, 1024);
+    printf("%s\n", buffer);
+    memset(buffer, 0, sizeof(buffer));
+
+    std::string input;
+    std::cin >> input;
+    const char* query = input.c_str();
+    send(sock, query, strlen(query), 0);
+
     // Отправляем логин и пароль для авторизации
     valread = read(sock, buffer, 1024);
     printf("%s\n", buffer);
+    std::cin >> input;
+    const char* login = input.c_str();
     send(sock, login, strlen(login), 0);
     memset(buffer, 0, sizeof(buffer));
 
     valread = read(sock, buffer, 1024);
     printf("%s\n", buffer);
+    std::cin >> input;
+    const char* password = input.c_str();
     send(sock, password, strlen(password), 0);
+    memset(buffer, 0, sizeof(buffer));
 
     valread = read(sock, buffer, 1024);
     printf("%s\n", buffer);
-    if (strcmp(buffer, "Login successful") != 0) {
+    if (strcmp(buffer, "Reg/Login successful") != 0) {
         std::cout << "Server: login failed";
         exit(EXIT_FAILURE);
     }
     memset(buffer, 0, sizeof buffer);
 
     while (true) {
-        std::string temp;
-        std::cin >> temp;
-        const char* msg = temp.c_str();
+        std::cout << "Type message:\n";
+        std::cin >> input;
+        const char* msg = input.c_str();
         // Отправляем сообщение на сервер
         send(sock, msg, strlen(msg), 0);
-        printf("Hello message sent\n");
-
-        memset(buffer, 0, sizeof buffer);
         // Получаем ответ от сервера
         valread = read(sock, buffer, 1024);
+        if (std::string(buffer) == "Bye too") {
+            close_connection(sock);
+            break;
+        }
         printf("%s\n",buffer );
 
         memset(buffer, 0, sizeof buffer);

@@ -6,7 +6,7 @@ CXX_DEFINES =
 
 CXX_INCLUDES = 
 
-CXX_FLAGSarm64 = -Wall -Wextra -Wpedantic -g -O0 -fsanitize=address -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -std=gnu++17
+CXX_FLAGSarm64 = -Wall -Wextra -Wpedantic -g -O0 -fsanitize=address -lsqlite3 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -std=gnu++17
 
-CXX_FLAGS = -Wall -Wextra -Wpedantic -g -O0 -fsanitize=address -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -std=gnu++17
+CXX_FLAGS = -Wall -Wextra -Wpedantic -g -O0 -fsanitize=address -lsqlite3 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -std=gnu++17
 

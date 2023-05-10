@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE)
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -g -O0 -fsanitize=address")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -g -O0 -fsanitize=address -lsqlite3")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/../")
 
@@ -15,6 +15,7 @@ add_executable(server)
 target_sources(server
   PUBLIC
     src/server.cpp
+    src/data_base/db_tools.cpp
 )
 
 add_executable(client)

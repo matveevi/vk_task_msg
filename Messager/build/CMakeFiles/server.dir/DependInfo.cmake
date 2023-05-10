@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/Users/mac/Documents/work_space/VkTask/Messager/src/data_base/db_tools.cpp" "CMakeFiles/server.dir/src/data_base/db_tools.cpp.o" "gcc" "CMakeFiles/server.dir/src/data_base/db_tools.cpp.o.d"
   "/Users/mac/Documents/work_space/VkTask/Messager/src/server.cpp" "CMakeFiles/server.dir/src/server.cpp.o" "gcc" "CMakeFiles/server.dir/src/server.cpp.o.d"
   )
 

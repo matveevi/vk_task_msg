@@ -3,6 +3,17 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include "data_base/db_tools.cpp"
+#include <string>
+
+#include <random>
+#include <sstream>
+
+// Закрытие сокета
+void close_connection(int socket) {
+    shutdown(socket, SHUT_RDWR);
+    close(socket);
+}
 
 const int PORT = 8888;
 
@@ -15,9 +26,12 @@ int main(int argc, char const *argv[]) {
     const char *hello = "Hello from server";
     const char *login = "Enter login: ";
     const char *password = "Enter password: ";
-    const char *success = "Login successful";
+    const char *success = "Reg/Login successful";
     const char *failure = "Login failed";
     const char *msg_done = "Message get";
+    const char *query = "Enter query: login or reg";
+    const char *close_socket = "Bye too";
+    int id_user = 1;
 
     // Создаем дескриптор сокета
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
@@ -60,11 +74,22 @@ int main(int argc, char const *argv[]) {
         printf("Hello message sent\n");
 
         // Авторизация клиента
+        printf("%s\n", query);
+        send(new_socket, query, strlen(query), 0);
+        std::cout << "Wait login or register\n";
+        int valread = read(new_socket, buffer, 1024);
+        printf("%s\n", buffer);
+
+        std::string check_to_login(buffer);
+        check_to_login.erase(remove(check_to_login.begin(), check_to_login.end(), '\n'), check_to_login.end());
+        memset(buffer, 0, sizeof buffer);
+
         printf("%s\n", login);
         send(new_socket, login, strlen(login), 0);
         std::cout << "Wait login\n";
-        int valread = read(new_socket, buffer, 1024);
+        valread = read(new_socket, buffer, 1024);
         printf("%s\n", buffer);
+
         std::string login_str(buffer);
         login_str.erase(remove(login_str.begin(), login_str.end(), '\n'), login_str.end());
         memset(buffer, 0, sizeof buffer);
@@ -77,14 +102,24 @@ int main(int argc, char const *argv[]) {
         password_str.erase(remove(password_str.begin(), password_str.end(), '\n'), password_str.end());
         memset(buffer, 0, sizeof(buffer));
 
-        if (login_str == "admin" && password_str == "password") {
+        Person new_person = {id_user++, "name", login_str, password_str};
+        if (check_to_login == "login") {
+            // User want to login
+            if (check_user_in_db(new_person)) {
+                send(new_socket, success, strlen(success), 0);
+                printf("%s\n", success);
+            } else {
+                send(new_socket, failure, strlen(failure), 0);
+                printf("%s\n", failure);
+                continue;
+            }
+        } else if (check_to_login == "reg") {
+            // User want to register
+            insert_into_db(new_person);
             send(new_socket, success, strlen(success), 0);
-            printf("%s\n", success);
         } else {
-            send(new_socket, failure, strlen(failure), 0);
-            printf("%s\n", failure);
-            continue;
-            // exit(EXIT_FAILURE);
+            // Undefined symbol
+            std::cout << "Enter 'reg' or 'login' \n";
         }
 
         // Получаем сообщение от клиента
@@ -92,6 +127,13 @@ int main(int argc, char const *argv[]) {
             valread = read(new_socket, buffer, 1024);
             printf("%s\n", buffer);
             std::cout << buffer;
+
+            if (std::string(buffer) == "close"){
+                send(new_socket, close_socket, strlen(close_socket), 0);
+                memset(buffer, 0, sizeof(buffer));
+                close_connection(new_socket);
+                break;
+            }
 
             send(new_socket, msg_done, strlen(msg_done), 0);
 
