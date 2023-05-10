@@ -52,7 +52,6 @@ int main(int argc, char const *argv[]) {
 
     // Привязываем сокет к адресу и порту
     if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
-    // if (bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0) {
         perror("bind failed");
         exit(EXIT_FAILURE);
     }

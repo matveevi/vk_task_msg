@@ -16,11 +16,6 @@ int main(int argc, char const *argv[]) {
     int sock = 0, valread;
     struct sockaddr_in serv_addr;
     char buffer[1024] = {0};
-    const char *hello = "Hello from client";
-    // const char *login = "admin\n";
-    // const char *password = "password\n";
-    // const char *q_reg = "reg\n";
-    // const char *q_login = "login\n";
 
     // Создаем дескриптор сокета
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
