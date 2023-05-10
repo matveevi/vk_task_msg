@@ -1,0 +1,4 @@
+/Users/mac/Documents/work_space/VkTask/Messager/build/CMakeFiles/server.dir
+/Users/mac/Documents/work_space/VkTask/Messager/build/CMakeFiles/client.dir
+/Users/mac/Documents/work_space/VkTask/Messager/build/CMakeFiles/edit_cache.dir
+/Users/mac/Documents/work_space/VkTask/Messager/build/CMakeFiles/rebuild_cache.dir
